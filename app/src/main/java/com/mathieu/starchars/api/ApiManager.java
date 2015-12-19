@@ -23,7 +23,7 @@ public class ApiManager {
      * Initialize SwapiService with given base url
      * @return Instance of SwapiService
      */
-    public SwapiService createSwapiService(String baseUrl) {
+    private SwapiService createSwapiService(String baseUrl) {
 
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.interceptors().add(new LoggingInterceptor());

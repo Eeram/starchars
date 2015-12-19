@@ -23,7 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-
     @OnClick(R.id.button_lets_go)
     protected void onButtonLetsGoClick() {
         finish();

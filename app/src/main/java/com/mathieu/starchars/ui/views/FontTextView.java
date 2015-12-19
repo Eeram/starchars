@@ -12,6 +12,12 @@ import com.mathieu.starchars.R;
 
 import java.io.IOException;
 
+/**
+ * Project :    Star Chars
+ * Author :     Mathieu
+ * Date :       19/12/2015
+ */
+
 public class FontTextView extends TextView {
 
     private static LruCache<String, Typeface> TYPEFACE_CACHE = new LruCache<String, Typeface>(12);

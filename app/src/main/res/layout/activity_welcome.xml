@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="48dp"
             android:gravity="center"
-            android:text="Welcome young padawan!\n\nInformation about all Star Wars characters\nhere you'll find" />
+            android:text="Welcome young padawan!\n\nInformation about all Star Wars characters\nhere you'll find." />
 
         <Button
             android:id="@+id/button_lets_go"

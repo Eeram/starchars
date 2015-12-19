@@ -4,6 +4,7 @@ import com.mathieu.starchars.api.models.PeopleResponse;
 
 import retrofit.Call;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -11,12 +12,11 @@ import retrofit.http.Query;
 public interface SwapiService {
 
     String BASE_URL = "http://swapi.co/api/";
+    int ITEMS_PER_PAGE = 10;
 
-    @FormUrlEncoded
-    @POST("people")
+    @GET("people/")
     Call<PeopleResponse> getPeople(@Query("page") int page);
 
-    @FormUrlEncoded
-    @POST("people/{id]/")
+    @GET("people/{id]/")
     Call<PeopleResponse> getPerson(@Path("id") int id);
 }

@@ -1,11 +1,15 @@
 <resources>
 
+    <!-- Theme -->
+
     <style name="StarCharsTheme" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/gray_dark</item>
         <item name="colorPrimaryDark">@color/gray_darker</item>
         <item name="colorAccent">@color/amber</item>
         <item name="android:windowBackground">@color/gray_darker</item>
     </style>
+
+    <!-- UI elements -->
 
     <style name="YellowButton" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:elevation">4dp</item>
@@ -18,4 +22,17 @@
         <item name="android:background">@drawable/circle_button_amber_selector</item>
     </style>
 
+    <!-- Ripple foreground -->
+
+    <style name="Foreground">
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Foreground.Dark">
+        <item name="android:foreground">@drawable/button_transparent_dark_selector</item>
+    </style>
+
+    <style name="Foreground.Light">
+        <item name="android:foreground">@drawable/button_transparent_light_selector</item>
+    </style>
 </resources>
