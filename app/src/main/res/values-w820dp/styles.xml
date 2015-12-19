@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="StarCharsTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/gray_dark</item>
+        <item name="colorPrimaryDark">@color/gray_darker</item>
+        <item name="colorAccent">@color/amber</item>
+    </style>
+
+</resources>
