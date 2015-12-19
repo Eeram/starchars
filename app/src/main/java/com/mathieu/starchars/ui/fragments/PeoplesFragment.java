@@ -81,7 +81,6 @@ public class PeoplesFragment extends Fragment implements Callback<PeoplesRespons
         recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager, currentPage) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                Toast.makeText(getActivity(), "Loading more : " + page, Toast.LENGTH_SHORT).show();
                 getPeople(page);
             }
         });
@@ -96,7 +95,6 @@ public class PeoplesFragment extends Fragment implements Callback<PeoplesRespons
     public void onResponse(Response<PeoplesResponse> response, Retrofit retrofit) {
         try {
             Log.e(TAG, ", PeoplesResponse.success = " + response.body().results.size());
-
 //            if (peoples.isEmpty()) {
 //                recyclerView.scheduleLayoutAnimation();
 //            }

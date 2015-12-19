@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.models.People;
-import com.mathieu.starchars.ui.DetailPeopleActivity;
+import com.mathieu.starchars.ui.PeopleDetailActivity;
 
 import java.util.ArrayList;
 
@@ -77,7 +77,7 @@ public class PeoplesAdapter extends FooterBaseAdapter<PeoplesAdapter.ViewHolder>
 
         if (v.getId() == holder.container.getId()) {
             Intent intent;
-            intent = new Intent(context, DetailPeopleActivity.class);
+            intent = new Intent(context, PeopleDetailActivity.class);
             intent.putExtra("people", (People) items.get(position));
             context.startActivity(intent);
         }

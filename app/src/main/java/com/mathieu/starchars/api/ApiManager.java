@@ -1,5 +1,7 @@
 package com.mathieu.starchars.api;
 
+import android.os.AsyncTask;
+
 import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.GsonConverterFactory;
@@ -21,6 +23,7 @@ public class ApiManager {
 
     /**
      * Initialize SwapiService with given base url
+     *
      * @return Instance of SwapiService
      */
     private SwapiService createSwapiService(String baseUrl) {

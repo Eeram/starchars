@@ -1,5 +1,7 @@
 package com.mathieu.starchars.api.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -45,11 +47,13 @@ public class People implements Serializable {
     public String url;
     @SerializedName("vehicles")
     public List<String> vehicles = new ArrayList<String>();
-    public String description = null;
+
+    private String description = null;
+    private String slug = null;
 
     public String getDescription() {
         if (description == null) {
-            description = name + " is a " + (gender.equals("n/a") ? "assexual" : gender) + " with ";
+            description = name + " is a " + getGender() + " with ";
             if (!hairColor.equals("n/a")) {
                 description += hairColor + " hair, ";
             }
@@ -62,5 +66,19 @@ public class People implements Serializable {
             description += ".";
         }
         return description;
+    }
+
+    public String getGender() {
+        return gender.equals("n/a") ? "assexual" : gender;
+    }
+
+    public String getSlug() {
+        if (slug == null) {
+            slug = name.toLowerCase()
+                    .replaceAll(" ", "-")
+                    .replaceAll("é", "e");
+            Log.e("PEOPLE", ", slug = " + slug);
+        }
+        return slug;
     }
 }

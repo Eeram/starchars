@@ -15,7 +15,7 @@
 
     <style name="TextView.Caption">
         <item name="android:textAllCaps">true</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">16dp</item>
         <item name="android:textColor">@color/very_transparent_white</item>
     </style>
 
@@ -29,13 +29,14 @@
     <!-- Buttons -->
 
     <style name="YellowButton" parent="Base.TextAppearance.AppCompat.Button">
-        <item name="android:elevation">4dp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/transparent_black</item>
         <item name="android:paddingLeft">24dp</item>
         <item name="android:paddingRight">24dp</item>
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
         <item name="android:drawablePadding">16dp</item>
+        <item name="android:elevation">4dp</item>
         <item name="android:background">@drawable/circle_button_amber_selector</item>
     </style>
 
