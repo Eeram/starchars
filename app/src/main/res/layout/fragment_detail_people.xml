@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?android:attr/actionBarSize"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <TextView
+        style="@style/TextView.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quick description" />
+
+    <TextView
+        android:id="@+id/people_description"
+        style="@style/TextView.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Lorem ipsum" />
+
+    <include layout="@layout/view_horizontal_divider" />
+
+    <TextView
+        style="@style/TextView.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full name" />
+
+    <TextView
+        android:id="@+id/people_full_name"
+        style="@style/TextView.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Darth Vader" />
+
+    <include layout="@layout/view_horizontal_divider" />
+
+    <TextView
+        style="@style/TextView.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Homeworld" />
+
+    <TextView
+        android:id="@+id/people_homeworld"
+        style="@style/TextView.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Tatooine" />
+
+    <include layout="@layout/view_horizontal_divider" />
+
+    <TextView
+        style="@style/TextView.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Birthday" />
+
+    <TextView
+        android:id="@+id/people_birthday"
+        style="@style/TextView.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="48 BBY" />
+
+    <include layout="@layout/view_horizontal_divider" />
+</LinearLayout>

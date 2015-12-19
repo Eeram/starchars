@@ -1,16 +1,19 @@
 package com.mathieu.starchars.ui;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mathieu.starchars.R;
-import com.mathieu.starchars.ui.fragments.PeopleFragment;
+import com.mathieu.starchars.ui.fragments.PeoplesFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Project :    Star Chars
@@ -18,35 +21,48 @@ import com.mathieu.starchars.ui.fragments.PeopleFragment;
  * Date :       19/12/2015
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+
+    @Bind(R.id.main_toolbar)
+    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startWelcomeActivityIfNeeded();
-        initPeopleFragment();
+        ButterKnife.bind(this);
+
+        startAboutActivityIfNeeded();
+        initToolbar();
+        initPeoplesFragment();
     }
 
-    private void startWelcomeActivityIfNeeded() {
+    private void initToolbar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(null);
+    }
+
+    private void initPeoplesFragment() {
+        Fragment fragment;
+        if (getFragmentManager().findFragmentByTag(PeoplesFragment.TAG) != null)
+            fragment = getFragmentManager().findFragmentByTag(PeoplesFragment.TAG);
+        else {
+            fragment = PeoplesFragment.newInstance();
+        }
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, fragment, PeoplesFragment.TAG)
+                .commit();
+    }
+
+    private void startAboutActivityIfNeeded() {
         SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         boolean isFirstLaunch = prefs.getBoolean("isFirstLaunch", true);
         if (isFirstLaunch) {
             prefs.edit().putBoolean("isFirstLaunch", false).apply();
-            startActivity(new Intent(this, WelcomeActivity.class));
+            startAboutActivity();
         }
-    }
-    private void initPeopleFragment() {
-        Fragment fragment;
-        if (getFragmentManager().findFragmentByTag(PeopleFragment.TAG) != null)
-            fragment = getFragmentManager().findFragmentByTag(PeopleFragment.TAG);
-        else {
-            fragment = PeopleFragment.newInstance();
-        }
-
-        getFragmentManager().beginTransaction()
-                .replace(R.id.frame_container, fragment, PeopleFragment.TAG)
-                .commit();
     }
 
     @Override
@@ -59,10 +75,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_about:
+                startAboutActivity();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startAboutActivity() {
+        startActivity(new Intent(this, AboutActivity.class));
+
     }
 }

@@ -1,11 +1,9 @@
 package com.mathieu.starchars.api;
 
-import com.mathieu.starchars.api.models.PeopleResponse;
+import com.mathieu.starchars.api.models.PeoplesResponse;
 
 import retrofit.Call;
-import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
-import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -15,8 +13,8 @@ public interface SwapiService {
     int ITEMS_PER_PAGE = 10;
 
     @GET("people/")
-    Call<PeopleResponse> getPeople(@Query("page") int page);
+    Call<PeoplesResponse> getPeople(@Query("page") int page);
 
     @GET("people/{id]/")
-    Call<PeopleResponse> getPerson(@Path("id") int id);
+    Call<PeoplesResponse> getPerson(@Path("id") int id);
 }

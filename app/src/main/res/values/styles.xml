@@ -9,7 +9,24 @@
         <item name="android:windowBackground">@color/gray_darker</item>
     </style>
 
-    <!-- UI elements -->
+    <!-- TextViews -->
+
+    <style name="TextView" />
+
+    <style name="TextView.Caption">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/very_transparent_white</item>
+    </style>
+
+    <style name="TextView.Value">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Buttons -->
 
     <style name="YellowButton" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:elevation">4dp</item>

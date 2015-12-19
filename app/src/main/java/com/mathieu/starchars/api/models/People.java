@@ -45,4 +45,22 @@ public class People implements Serializable {
     public String url;
     @SerializedName("vehicles")
     public List<String> vehicles = new ArrayList<String>();
+    public String description = null;
+
+    public String getDescription() {
+        if (description == null) {
+            description = name + " is a " + (gender.equals("n/a") ? "assexual" : gender) + " with ";
+            if (!hairColor.equals("n/a")) {
+                description += hairColor + " hair, ";
+            }
+            if (!eyeColor.equals("n/a")) {
+                description += eyeColor + " eyes, ";
+            }
+            if (!skinColor.equals("n/a")) {
+                description += "and a " + skinColor + " skin";
+            }
+            description += ".";
+        }
+        return description;
+    }
 }

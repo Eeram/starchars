@@ -1,27 +1,20 @@
 package com.mathieu.starchars.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.models.People;
+import com.mathieu.starchars.ui.DetailPeopleActivity;
 
 import java.util.ArrayList;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 /**
  * Project :    Star Chars
@@ -29,14 +22,14 @@ import retrofit.Retrofit;
  * Date :       19/12/2015
  */
 
-public class PeopleAdapter extends FooterBaseAdapter<PeopleAdapter.ViewHolder>
+public class PeoplesAdapter extends FooterBaseAdapter<PeoplesAdapter.ViewHolder>
         implements View.OnClickListener {
 
-    private final static String TAG = "PeopleAdapter";
+    private final static String TAG = "PeoplesAdapter";
 
     private Context context;
 
-    public PeopleAdapter(Context context, ArrayList<People> items, View footer) {
+    public PeoplesAdapter(Context context, ArrayList<People> items, View footer) {
         super(items, footer);
         this.context = context;
     }
@@ -52,7 +45,7 @@ public class PeopleAdapter extends FooterBaseAdapter<PeopleAdapter.ViewHolder>
 
     @NonNull
     private ViewHolder createNormalViewHolder(ViewGroup viewGroup) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_person, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_people, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
 
         holder.container.setOnClickListener(this);
@@ -83,14 +76,12 @@ public class PeopleAdapter extends FooterBaseAdapter<PeopleAdapter.ViewHolder>
         int position = holder.getPosition();
 
         if (v.getId() == holder.container.getId()) {
-//            Intent intent;
-//            intent = new Intent(context, ArticleActivity.class);
-//            intent.putExtra("currentPosition", position);
-//            intent.putExtra("articles", items);
-//            context.startActivity(intent);
+            Intent intent;
+            intent = new Intent(context, DetailPeopleActivity.class);
+            intent.putExtra("people", (People) items.get(position));
+            context.startActivity(intent);
         }
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public FrameLayout container;
@@ -99,8 +90,8 @@ public class PeopleAdapter extends FooterBaseAdapter<PeopleAdapter.ViewHolder>
         public ViewHolder(View itemView) {
             super(itemView);
 
-            personName = (TextView) itemView.findViewById(R.id.person_name);
-            container = (FrameLayout) itemView.findViewById(R.id.person_container);
+            personName = (TextView) itemView.findViewById(R.id.people_name);
+            container = (FrameLayout) itemView.findViewById(R.id.people_container);
         }
     }
 }

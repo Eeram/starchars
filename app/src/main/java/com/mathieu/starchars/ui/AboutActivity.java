@@ -14,7 +14,7 @@ import butterknife.OnClick;
  * Date :       19/12/2015
  */
 
-public class WelcomeActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

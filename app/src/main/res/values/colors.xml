@@ -2,10 +2,15 @@
 <resources>
     <color name="amber">#FFC107</color>
     <color name="amber_dark">#c99507</color>
+
+    <!--<color name="gray">#373737</color>-->
+    <!--<color name="gray_dark">#212121</color>-->
+    <!--<color name="gray_darker">#171717</color>-->
+    <!--<color name="gray_darker_2">#0a0a0a</color>-->
     <color name="gray">#373737</color>
-    <color name="gray_dark">#212121</color>
-    <color name="gray_darker">#171717</color>
-    <color name="gray_darker_2">#0a0a0a</color>
+    <color name="gray_dark">#1f1d22</color>
+    <color name="gray_darker">#141217</color>
+    <color name="gray_darker_2">#0e0c10</color>
 
     <color name="transparent_white">#81ffffff</color>
     <color name="very_transparent_white">#48ffffff</color>

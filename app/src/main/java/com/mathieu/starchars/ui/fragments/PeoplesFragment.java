@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.ApiManager;
 import com.mathieu.starchars.api.models.People;
-import com.mathieu.starchars.api.models.PeopleResponse;
-import com.mathieu.starchars.ui.adapters.PeopleAdapter;
+import com.mathieu.starchars.api.models.PeoplesResponse;
+import com.mathieu.starchars.ui.adapters.PeoplesAdapter;
 import com.mathieu.starchars.utils.EndlessScrollListener;
 
 import java.util.ArrayList;
@@ -34,9 +34,9 @@ import retrofit.Retrofit;
  * Date :       19/12/2015
  */
 
-public class PeopleFragment extends Fragment implements Callback<PeopleResponse> {
+public class PeoplesFragment extends Fragment implements Callback<PeoplesResponse> {
 
-    public final static String TAG = "PeopleFragment";
+    public final static String TAG = "PeoplesFragment";
 
     @Bind(R.id.progress_bar)
     protected ProgressBar progressBar;
@@ -44,20 +44,20 @@ public class PeopleFragment extends Fragment implements Callback<PeopleResponse>
     protected RecyclerView recyclerView;
 
     private LinearLayoutManager layoutManager;
-    private PeopleAdapter adapter;
+    private PeoplesAdapter adapter;
 
     private ArrayList<People> peoples;
     private int currentPage = 1;
 
-    public static PeopleFragment newInstance() {
-        PeopleFragment fragment = new PeopleFragment();
+    public static PeoplesFragment newInstance() {
+        PeoplesFragment fragment = new PeoplesFragment();
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_people, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_peoples, container, false);
         ButterKnife.bind(this, rootView);
 
         initRecylerView();
@@ -73,7 +73,7 @@ public class PeopleFragment extends Fragment implements Callback<PeopleResponse>
         recyclerView.setLayoutManager(layoutManager);
 
         View footer = LayoutInflater.from(getActivity()).inflate(R.layout.item_loading_footer, recyclerView, false);
-        adapter = new PeopleAdapter(getActivity(), peoples, footer);
+        adapter = new PeoplesAdapter(getActivity(), peoples, footer);
 
         recyclerView.setAdapter(adapter);
 //        removeBlink();
@@ -88,27 +88,24 @@ public class PeopleFragment extends Fragment implements Callback<PeopleResponse>
     }
 
     private void getPeople(int page) {
-        Call<PeopleResponse> articleCallback = new ApiManager().getSwapiService().getPeople(page);
+        Call<PeoplesResponse> articleCallback = new ApiManager().getSwapiService().getPeople(page);
         articleCallback.enqueue(this);
     }
 
     @Override
-    public void onResponse(Response<PeopleResponse> response, Retrofit retrofit) {
+    public void onResponse(Response<PeoplesResponse> response, Retrofit retrofit) {
         try {
-            Log.e(TAG, ", PeopleResponse.success = " + response.body().results.size());
+            Log.e(TAG, ", PeoplesResponse.success = " + response.body().results.size());
 
-            if (peoples.isEmpty()) {
-                recyclerView.scheduleLayoutAnimation();
-            }
+//            if (peoples.isEmpty()) {
+//                recyclerView.scheduleLayoutAnimation();
+//            }
 
-            for (People people : response.body().results) {
-                peoples.add(people);
+            for (int i = 0; i < response.body().results.size(); ++i) {
+                peoples.add((People) response.body().results.get(i));
             }
             adapter.notifyDataSetChanged();
-
-            if (progressBar.getVisibility() == View.VISIBLE) {
-                progressBar.setVisibility(View.GONE);
-            }
+            progressBar.setVisibility(View.GONE);
 
         } catch (Exception e) {
             e.printStackTrace();
