@@ -17,6 +17,7 @@ import com.mathieu.starchars.api.ApiManager;
 import com.mathieu.starchars.api.models.People;
 import com.mathieu.starchars.api.models.PeoplesResponse;
 import com.mathieu.starchars.ui.adapters.PeoplesAdapter;
+import com.mathieu.starchars.ui.views.StarWarsRecyclerView;
 import com.mathieu.starchars.utils.EndlessScrollListener;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class PeoplesFragment extends Fragment implements Callback<PeoplesRespons
     @Bind(R.id.progress_bar)
     protected ProgressBar progressBar;
     @Bind(R.id.recycler_view)
-    protected RecyclerView recyclerView;
+    protected StarWarsRecyclerView recyclerView;
 
     private LinearLayoutManager layoutManager;
     private PeoplesAdapter adapter;

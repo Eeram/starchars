@@ -33,26 +33,28 @@ public class PeopleDetailFragment extends Fragment {
 
     public final static String TAG = "PeopleDetailFragment";
 
-    @Bind(R.id.header_image)
-    protected ImageView headerImage;
-    @Bind(R.id.header_progress_bar)
-    protected ProgressBar progressBar;
-    @Bind(R.id.header_error_view)
-    protected View headerErrorView;
+    @Bind(R.id.detail_toolbar) protected Toolbar toolbar;
 
-    @Bind(R.id.people_description)
-    protected TextView description;
-    @Bind(R.id.people_full_name)
-    protected TextView fullName;
-    @Bind(R.id.people_birthday)
-    protected TextView birthday;
-    @Bind(R.id.people_homeworld)
-    protected TextView homeworld;
-    @Bind(R.id.people_gender)
-    protected TextView gender;
+    @Bind(R.id.header_image) protected ImageView headerImage;
+    @Bind(R.id.header_progress_bar) protected ProgressBar progressBar;
+    @Bind(R.id.header_error_view) protected View headerErrorView;
 
-    @Bind(R.id.detail_toolbar)
-    protected Toolbar toolbar;
+    @Bind(R.id.people_description) protected TextView description;
+    @Bind(R.id.people_full_name) protected TextView fullName;
+    @Bind(R.id.people_birthday) protected TextView birthday;
+    @Bind(R.id.people_homeworld) protected TextView homeworld;
+    @Bind(R.id.people_gender) protected TextView gender;
+    @Bind(R.id.people_mass) protected TextView mass;
+    @Bind(R.id.people_height) protected TextView height;
+
+    @Bind(R.id.people_episode_1) protected TextView episode1;
+    @Bind(R.id.people_episode_2) protected TextView episode2;
+    @Bind(R.id.people_episode_3) protected TextView episode3;
+    @Bind(R.id.people_episode_4) protected TextView episode4;
+    @Bind(R.id.people_episode_5) protected TextView episode5;
+    @Bind(R.id.people_episode_6) protected TextView episode6;
+    @Bind(R.id.people_episode_7) protected TextView episode7;
+
     private People people;
 
     public static PeopleDetailFragment newInstance(Bundle args) {
@@ -97,6 +99,16 @@ public class PeopleDetailFragment extends Fragment {
         birthday.setText(people.birthYear);
         description.setText(people.getDescription());
         gender.setText(people.getGender());
+        mass.setText(people.getMass());
+        height.setText(people.getHeight());
+
+        episode1.setBackgroundResource(people.isInFilm(1) ? R.drawable.circle_red : R.drawable.circle_gray);
+        episode2.setBackgroundResource(people.isInFilm(2) ? R.drawable.circle_red : R.drawable.circle_gray);
+        episode3.setBackgroundResource(people.isInFilm(3) ? R.drawable.circle_red : R.drawable.circle_gray);
+        episode4.setBackgroundResource(people.isInFilm(4) ? R.drawable.circle_red : R.drawable.circle_gray);
+        episode5.setBackgroundResource(people.isInFilm(5) ? R.drawable.circle_red : R.drawable.circle_gray);
+        episode6.setBackgroundResource(people.isInFilm(6) ? R.drawable.circle_red : R.drawable.circle_gray);
+        episode7.setBackgroundResource(people.isInFilm(7) ? R.drawable.circle_red : R.drawable.circle_gray);
     }
 
     private void retrieveCharacterPicture() {
@@ -106,6 +118,9 @@ public class PeopleDetailFragment extends Fragment {
 
             @Override
             public void onPictureRetrieved(String pictureUrl) {
+                if (getActivity() == null)
+                    return;
+
                 Picasso.with(getActivity()).load(pictureUrl).into(headerImage, new Callback() {
                     @Override
                     public void onSuccess() {

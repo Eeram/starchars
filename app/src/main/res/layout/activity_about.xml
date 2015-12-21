@@ -28,9 +28,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="24dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
             android:gravity="center"
-            android:text="Welcome young padawan!\n\nInformation about all Star Wars characters\nhere you'll find." />
+            app:font="Raleway-Bold.ttf"
+            android:text="Welcome young padawan!"/>
+
+        <com.mathieu.starchars.ui.views.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="64dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            app:font="Raleway-Medium.ttf"
+            android:text="Information about all Star Wars characters here you'll find."/>
 
         <Button
             android:id="@+id/button_lets_go"
@@ -40,4 +53,12 @@
             style="@style/YellowButton"
             android:text="Ok, let's go!" />
     </LinearLayout>
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        app:contentInsetLeft="72dp"/>
 </RelativeLayout>

@@ -10,7 +10,7 @@
     app:expandedTitleMarginEnd="64dp"
     app:expandedTitleMarginStart="48dp"
     app:layout_scrollFlags="scroll|exitUntilCollapsed"
-    tools:context=".MainActivity">
+    tools:context=".ui.PeopleDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -28,7 +28,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="72dp"
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|snap">
 
             <ImageView
                 android:id="@+id/header_image"
@@ -56,10 +56,10 @@
             <LinearLayout
                 android:id="@+id/header_error_view"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
-                    android:text="Picture\nunavailable" />
+                    android:text="No picture\navailable" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
@@ -89,11 +89,12 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -104,26 +105,13 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
-            <TextView
+
+            <com.mathieu.starchars.ui.views.FontTextView
                 style="@style/TextView.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quick description" />
-
-            <TextView
-                android:id="@+id/people_description"
-                style="@style/TextView.Value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Lorem ipsum" />
-
-            <include layout="@layout/view_horizontal_divider" />
-
-            <TextView
-                style="@style/TextView.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Full name" />
+                android:text="Full name"
+                app:font="Raleway-Medium.ttf" />
 
             <TextView
                 android:id="@+id/people_full_name"
@@ -134,11 +122,131 @@
 
             <include layout="@layout/view_horizontal_divider" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
                 style="@style/TextView.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Birthday" />
+                android:text="Quick description"
+                app:font="Raleway-Medium.ttf" />
+
+            <TextView
+                android:id="@+id/people_description"
+                style="@style/TextView.Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Lorem ipsum" />
+
+            <include layout="@layout/view_horizontal_divider" />
+
+            <com.mathieu.starchars.ui.views.FontTextView
+                style="@style/TextView.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Can be seen in episodes"
+                app:font="Raleway-Medium.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/people_episode_1"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="I" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/people_episode_2"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="II" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/people_episode_3"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="III" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/people_episode_4"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="IV" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/people_episode_5"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="V" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/people_episode_6"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="VI" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/people_episode_7"
+                        style="@style/TextView.Value.Circle"
+                        android:layout_centerInParent="true"
+                        android:text="VII" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_horizontal_divider" />
+
+            <com.mathieu.starchars.ui.views.FontTextView
+                style="@style/TextView.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Birthday"
+                app:font="Raleway-Medium.ttf" />
 
             <TextView
                 android:id="@+id/people_birthday"
@@ -149,11 +257,12 @@
 
             <include layout="@layout/view_horizontal_divider" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
                 style="@style/TextView.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Genre" />
+                android:text="Genre"
+                app:font="Raleway-Medium.ttf" />
 
             <TextView
                 android:id="@+id/people_gender"
@@ -164,11 +273,12 @@
 
             <include layout="@layout/view_horizontal_divider" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
                 style="@style/TextView.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Homeworld" />
+                android:text="Homeworld"
+                app:font="Raleway-Medium.ttf" />
 
             <TextView
                 android:id="@+id/people_homeworld"
@@ -179,8 +289,60 @@
 
             <include layout="@layout/view_horizontal_divider" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        style="@style/TextView.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height"
+                        app:font="Raleway-Medium.ttf" />
+
+                    <TextView
+                        android:id="@+id/people_height"
+                        style="@style/TextView.Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="100 Kg for 1,72m" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        style="@style/TextView.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mass"
+                        app:font="Raleway-Medium.ttf" />
+
+                    <TextView
+                        android:id="@+id/people_mass"
+                        style="@style/TextView.Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="100 Kg for 1,72m" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_horizontal_divider" />
+
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

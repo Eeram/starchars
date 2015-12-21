@@ -1,9 +1,9 @@
 <resources>
 
     <style name="StarCharsTheme" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/gray_dark</item>
-        <item name="colorPrimaryDark">@color/gray_darker</item>
-        <item name="colorAccent">@color/amber</item>
+        <item name="colorPrimary">@color/gray_darker</item>
+        <item name="colorPrimaryDark">@color/gray_darker_2</item>
+        <item name="colorAccent">@color/red</item>
         <item name="android:windowBackground">@color/gray_darker</item>
     </style>
 

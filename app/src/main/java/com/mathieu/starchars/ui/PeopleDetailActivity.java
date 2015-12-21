@@ -33,6 +33,7 @@ public class PeopleDetailActivity extends BaseActivity {
             fragment = PeopleDetailFragment.newInstance(getIntent().getExtras());
         }
 
+
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame_container, fragment, PeopleDetailFragment.TAG)
                 .commit();
