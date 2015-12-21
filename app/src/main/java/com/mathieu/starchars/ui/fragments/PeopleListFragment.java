@@ -1,5 +1,6 @@
 package com.mathieu.starchars.ui.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.ApiManager;
 import com.mathieu.starchars.api.models.People;
 import com.mathieu.starchars.api.models.PeopleListResponse;
-import com.mathieu.starchars.ui.MainActivity;
 import com.mathieu.starchars.ui.adapters.FooterBaseAdapter;
 import com.mathieu.starchars.ui.adapters.PeopleListAdapter;
 import com.mathieu.starchars.utils.EndlessScrollListener;
@@ -43,7 +43,10 @@ import static com.mathieu.starchars.ui.adapters.FooterBaseAdapter.CHOICE_MODE_SI
  * Date :       19/12/2015
  */
 
-public class PeopleListFragment extends Fragment implements Callback<PeopleListResponse>, ItemTouchListenerAdapter.RecyclerViewOnItemClickListener, NetworkErrorManager.OnNetworkErrorClickListener {
+public class PeopleListFragment extends Fragment implements
+        Callback<PeopleListResponse>,
+        ItemTouchListenerAdapter.RecyclerViewOnItemClickListener,
+        NetworkErrorManager.OnNetworkErrorClickListener {
 
     public final static String TAG = "PeopleListFragment";
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
@@ -83,12 +86,6 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        isTwoPane = getArguments().getBoolean("isTwoPane", false);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,6 +93,8 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
         ButterKnife.bind(this, rootView);
 
         networkErrorManager = new NetworkErrorManager();
+        isTwoPane = getArguments().getBoolean("isTwoPane", false);
+
         initRecylerView();
 
         if (savedInstanceState != null && savedInstanceState.containsKey(PEOPLE_LIST)) {
@@ -113,19 +112,19 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (isTwoPane && savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            activatedPosition = savedInstanceState.getInt(STATE_ACTIVATED_POSITION);
         }
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (!(context instanceof Callbacks)) {
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        callbacks = (Callbacks) context;
+        callbacks = (Callbacks) activity;
     }
 
     @Override
@@ -154,7 +153,6 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
         Log.e(TAG, "peoples out = " + peopleList.size());
     }
 
-
     private void initRecylerView() {
         peopleList = new ArrayList<>();
 
@@ -174,6 +172,7 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
         });
 
         recyclerView.addOnItemTouchListener(new ItemTouchListenerAdapter(recyclerView, this));
+        setActivateOnItemClick(isTwoPane);
     }
 
     private void getPeopleList(int page) {
@@ -187,7 +186,9 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
 
     @Override
     public void onResponse(Response<PeopleListResponse> response, Retrofit retrofit) {
-        populateList(response.body().results);
+        if (response.body() != null) {
+            populateList(response.body().results);
+        }
     }
 
     @Override
@@ -202,13 +203,15 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
 
     private void populateList(List<People> peopleList) {
         boolean activateFirstItem = isTwoPane && this.peopleList.isEmpty();
+
         for (int i = 0; i < peopleList.size(); ++i) {
             this.peopleList.add(peopleList.get(i));
         }
         adapter.notifyDataSetChanged();
         progressBar.setVisibility(View.GONE);
-        if (activateFirstItem)
-            setActivatedPosition(0);
+
+        if (isTwoPane && activateFirstItem)
+            setActivatedPosition(activatedPosition);
     }
 
     @Override
@@ -222,8 +225,8 @@ public class PeopleListFragment extends Fragment implements Callback<PeopleListR
     }
 
     private void setActivatedPosition(int position) {
-        adapter.setSelected(position);
         activatedPosition = position;
+        adapter.setSelected(position);
         callbacks.onItemSelected(position, peopleList.get(position));
     }
 }

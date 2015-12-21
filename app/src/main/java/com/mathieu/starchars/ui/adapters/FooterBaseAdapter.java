@@ -1,13 +1,11 @@
 package com.mathieu.starchars.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.mathieu.starchars.api.SwapiService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Project :    Star Chars
@@ -40,9 +38,7 @@ public abstract class FooterBaseAdapter<V> extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Log.e(TAG, position + " bind : " + selectedItem);
         if (selectionMode == CHOICE_MODE_SINGLE) {
-            Log.e(TAG, position + " selected : " + selectedItem);
             holder.itemView.setActivated(position == selectedItem);
         }
     }

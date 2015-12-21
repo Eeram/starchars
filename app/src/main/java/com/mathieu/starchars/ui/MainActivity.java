@@ -106,7 +106,6 @@ public class MainActivity extends BaseActivity implements PeopleListFragment.Cal
         else {
             fragment = PeopleListFragment.newInstance(mTwoPane);
         }
-        fragment.setActivateOnItemClick(mTwoPane);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.frame_container_list, fragment, PeopleListFragment.TAG)
