@@ -23,9 +23,9 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray_darker"
+            android:background="@color/gray_darker_2"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="?attr/colorAccent"
             app:expandedTitleMarginEnd="72dp"
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin"
             app:layout_scrollFlags="scroll|snap">
@@ -53,29 +53,14 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center" />
 
-            <LinearLayout
+            <ImageView
                 android:id="@+id/header_error_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_info_warning" />
-
-                <TextView
-                    style="@style/TextView.Caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:text="No picture\navailable" />
-            </LinearLayout>
+                android:alpha="0.15"
+                android:src="@drawable/img_image_broken"
+                android:visibility="gone" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/detail_toolbar"
@@ -102,9 +87,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
-
 
             <com.mathieu.starchars.ui.views.FontTextView
                 style="@style/TextView.Caption"
@@ -273,23 +258,6 @@
 
             <include layout="@layout/view_horizontal_divider" />
 
-            <com.mathieu.starchars.ui.views.FontTextView
-                style="@style/TextView.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Homeworld"
-                app:font="Raleway-Medium.ttf" />
-
-            <TextView
-                android:id="@+id/people_homeworld"
-                style="@style/TextView.Value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Tatooine" />
-
-            <include layout="@layout/view_horizontal_divider" />
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -338,6 +306,22 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <include layout="@layout/view_horizontal_divider" />
+
+            <com.mathieu.starchars.ui.views.FontTextView
+                style="@style/TextView.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Homeworld"
+                app:font="Raleway-Medium.ttf" />
+
+            <TextView
+                android:id="@+id/people_homeworld"
+                style="@style/TextView.Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Tatooine" />
 
             <include layout="@layout/view_horizontal_divider" />
 

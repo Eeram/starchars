@@ -1,10 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="StarCharsTheme" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="AboutActivity" parent="@style/Theme.AppCompat.Dialog">
         <item name="colorPrimary">@color/gray_darker</item>
         <item name="colorPrimaryDark">@color/gray_darker_2</item>
         <item name="colorAccent">@color/red</item>
         <item name="android:windowBackground">@color/gray_darker</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
 </resources>

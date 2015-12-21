@@ -1,7 +1,6 @@
 package com.mathieu.starchars.ui.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.models.People;
-import com.mathieu.starchars.ui.PeopleDetailActivity;
 
 import java.util.ArrayList;
 
@@ -22,14 +20,12 @@ import java.util.ArrayList;
  * Date :       19/12/2015
  */
 
-public class PeoplesAdapter extends FooterBaseAdapter<PeoplesAdapter.ViewHolder>
-        implements View.OnClickListener {
-
-    private final static String TAG = "PeoplesAdapter";
+public class PeopleListAdapter extends FooterBaseAdapter<PeopleListAdapter.ViewHolder> {
+    private final static String TAG = "PeopleListAdapter";
 
     private Context context;
 
-    public PeoplesAdapter(Context context, ArrayList<People> items, View footer) {
+    public PeopleListAdapter(Context context, ArrayList<People> items, View footer) {
         super(items, footer);
         this.context = context;
     }
@@ -48,7 +44,7 @@ public class PeoplesAdapter extends FooterBaseAdapter<PeoplesAdapter.ViewHolder>
         View view = LayoutInflater.from(context).inflate(R.layout.item_people, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
 
-        holder.container.setOnClickListener(this);
+//        holder.container.setOnClickListener(this);
         holder.container.setTag(holder);
 
         return holder;
@@ -59,6 +55,7 @@ public class PeoplesAdapter extends FooterBaseAdapter<PeoplesAdapter.ViewHolder>
         if (isFooter(position)) {
             return;
         }
+        super.onBindViewHolder(holder, position);
 
         People people = (People) items.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
@@ -69,19 +66,19 @@ public class PeoplesAdapter extends FooterBaseAdapter<PeoplesAdapter.ViewHolder>
     public int getItemViewType(int position) {
         return super.getItemViewType(position) == ITEM_VIEW_TYPE_FOOTER ? ITEM_VIEW_TYPE_FOOTER : ITEM_VIEW_TYPE_NORMAL;
     }
-
-    @Override
-    public void onClick(View v) {
-        ViewHolder holder = (ViewHolder) v.getTag();
-        int position = holder.getPosition();
-
-        if (v.getId() == holder.container.getId()) {
-            Intent intent;
-            intent = new Intent(context, PeopleDetailActivity.class);
-            intent.putExtra("people", (People) items.get(position));
-            context.startActivity(intent);
-        }
-    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        ViewHolder holder = (ViewHolder) v.getTag();
+//        int position = holder.getPosition();
+//
+//        if (v.getId() == holder.container.getId()) {
+//            Intent intent;
+//            intent = new Intent(context, PeopleDetailActivity.class);
+//            intent.putExtra("people", (People) items.get(position));
+//            context.startActivity(intent);
+//        }
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public FrameLayout container;

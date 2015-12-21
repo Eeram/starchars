@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.PictureProvider;
 import com.mathieu.starchars.api.models.People;
+import com.mathieu.starchars.utils.DeviceUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -57,6 +58,7 @@ public class PeopleDetailFragment extends Fragment {
 
     private People people;
 
+
     public static PeopleDetailFragment newInstance(Bundle args) {
         PeopleDetailFragment fragment = new PeopleDetailFragment();
         fragment.setArguments(args);
@@ -72,7 +74,7 @@ public class PeopleDetailFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_detail_people, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_people_detail, container, false);
         ButterKnife.bind(this, rootView);
 
         retrieveCharacterPicture();
@@ -88,10 +90,12 @@ public class PeopleDetailFragment extends Fragment {
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_close);
         actionBar.setElevation(0);
         actionBar.setTitle(people.name);
+        if (!DeviceUtils.isTablet(getActivity()) || !DeviceUtils.isLandscape(getActivity())) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_action_close);
+        }
     }
 
     private void populateViews() {

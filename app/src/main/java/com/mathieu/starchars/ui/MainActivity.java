@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mathieu.starchars.R;
-import com.mathieu.starchars.ui.fragments.PeoplesFragment;
+import com.mathieu.starchars.api.models.People;
+import com.mathieu.starchars.ui.fragments.PeopleDetailFragment;
+import com.mathieu.starchars.ui.fragments.PeopleListFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,10 +23,11 @@ import butterknife.ButterKnife;
  * Date :       19/12/2015
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements PeopleListFragment.Callbacks {
 
-    @Bind(R.id.main_toolbar)
-    protected Toolbar toolbar;
+    @Bind(R.id.main_toolbar) protected Toolbar toolbar;
+
+    public boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,36 +35,22 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (findViewById(R.id.frame_container_detail) != null) {
+            mTwoPane = true;
+        }
+
         startAboutActivityIfNeeded();
+        setPeopleListFragment();
+
         initToolbar();
-        initPeoplesFragment();
     }
 
     private void initToolbar() {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(null);
-    }
-
-    private void initPeoplesFragment() {
-        Fragment fragment;
-        if (getFragmentManager().findFragmentByTag(PeoplesFragment.TAG) != null)
-            fragment = getFragmentManager().findFragmentByTag(PeoplesFragment.TAG);
-        else {
-            fragment = PeoplesFragment.newInstance();
-        }
-
-        getFragmentManager().beginTransaction()
-                .replace(R.id.frame_container, fragment, PeoplesFragment.TAG)
-                .commit();
-    }
-
-    private void startAboutActivityIfNeeded() {
-        SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
-        boolean isFirstLaunch = prefs.getBoolean("isFirstLaunch", true);
-        if (isFirstLaunch) {
-            prefs.edit().putBoolean("isFirstLaunch", false).apply();
-            startAboutActivity();
+        toolbar.setTitle(null);
+        if (!mTwoPane) {
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle(null);
         }
     }
 
@@ -84,8 +73,56 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void startAboutActivityIfNeeded() {
+        SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        boolean isFirstLaunch = prefs.getBoolean("isFirstLaunch", true);
+        if (isFirstLaunch) {
+            prefs.edit().putBoolean("isFirstLaunch", false).apply();
+            startAboutActivity();
+        }
+    }
+
     private void startAboutActivity() {
         startActivity(new Intent(this, AboutActivity.class));
+    }
 
+    @Override
+    public void onItemSelected(int position, People people) {
+        if (mTwoPane) {
+            setPeopleDetailFragment(people);
+        } else {
+            startPeopleDetailActivity(people);
+        }
+    }
+
+    private void setPeopleListFragment() {
+        PeopleListFragment fragment;
+        if (getFragmentManager().findFragmentByTag(PeopleListFragment.TAG) != null)
+            fragment = (PeopleListFragment) getFragmentManager().findFragmentByTag(PeopleListFragment.TAG);
+        else {
+            fragment = PeopleListFragment.newInstance();
+        }
+        fragment.setActivateOnItemClick(mTwoPane);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_container_list, fragment, PeopleListFragment.TAG)
+                .commit();
+    }
+
+    private void setPeopleDetailFragment(People people) {
+        Bundle args = new Bundle();
+        args.putSerializable("people", people);
+        Fragment fragment = PeopleDetailFragment.newInstance(args);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_container_detail, fragment, PeopleDetailFragment.TAG)
+                .commit();
+    }
+
+    private void startPeopleDetailActivity(People people) {
+        Intent intent;
+        intent = new Intent(this, PeopleDetailActivity.class);
+        intent.putExtra("people", people);
+        startActivity(intent);
     }
 }

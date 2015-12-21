@@ -10,7 +10,7 @@
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:layoutAnimation="@anim/grid_animation"
-        android:paddingTop="56dp"
+        android:paddingTop="?android:attr/actionBarSize"
         android:scrollbarStyle="insideOverlay"
         android:scrollbars="vertical" />
 

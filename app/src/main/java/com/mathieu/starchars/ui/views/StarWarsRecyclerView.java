@@ -54,4 +54,8 @@ public class StarWarsRecyclerView extends RecyclerView {
         super.dispatchDraw(canvas);
 //        canvas.restore();
     }
+
+    public void setSelectionMode(int selectionMode) {
+
+    }
 }
