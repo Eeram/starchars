@@ -2,8 +2,8 @@
 <resources>
     <color name="amber">#FFC107</color>
     <color name="amber_dark">#c99507</color>
-    <color name="red">#ef5350</color>
-    <color name="red_dark">#c04744</color>
+    <color name="red">#c24744</color>
+    <color name="red_dark">#9f423f</color>
 
     <!--<color name="gray">#373737</color>-->
     <!--<color name="gray_dark">#212121</color>-->

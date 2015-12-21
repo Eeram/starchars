@@ -10,7 +10,7 @@ import java.util.List;
  * Date :       19/12/2015
  */
 
-public class PeoplesResponse {
+public class PeopleListResponse {
     @SerializedName("count")
     public int count;
     @SerializedName("next")

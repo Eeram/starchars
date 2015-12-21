@@ -1,7 +1,7 @@
 package com.mathieu.starchars.ui.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,19 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.mathieu.starchars.R;
 import com.mathieu.starchars.api.ApiManager;
 import com.mathieu.starchars.api.models.People;
-import com.mathieu.starchars.api.models.PeoplesResponse;
+import com.mathieu.starchars.api.models.PeopleListResponse;
 import com.mathieu.starchars.ui.MainActivity;
 import com.mathieu.starchars.ui.adapters.FooterBaseAdapter;
 import com.mathieu.starchars.ui.adapters.PeopleListAdapter;
-import com.mathieu.starchars.ui.views.StarWarsRecyclerView;
 import com.mathieu.starchars.utils.EndlessScrollListener;
 import com.mathieu.starchars.utils.ItemTouchListenerAdapter;
+import com.mathieu.starchars.utils.NetworkErrorManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +43,15 @@ import static com.mathieu.starchars.ui.adapters.FooterBaseAdapter.CHOICE_MODE_SI
  * Date :       19/12/2015
  */
 
-public class PeopleListFragment extends Fragment implements Callback<PeoplesResponse>, ItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
+public class PeopleListFragment extends Fragment implements Callback<PeopleListResponse>, ItemTouchListenerAdapter.RecyclerViewOnItemClickListener, NetworkErrorManager.OnNetworkErrorClickListener {
 
     public final static String TAG = "PeopleListFragment";
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private static final String PEOPLE_LIST = "peopleList";
     private static final String CURRENT_PAGE = "currentPage";
 
-    private Callbacks mCallbacks = itemSelectedCallbacks;
-    private int mActivatedPosition = 0;
+    private Callbacks callbacks = itemSelectedCallbacks;
+    private int activatedPosition = 0;
     private int selectionMode = FooterBaseAdapter.CHOICE_MODE_NONE;
 
     public interface Callbacks {
@@ -65,16 +65,28 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
     };
 
     @Bind(R.id.progress_bar) protected ProgressBar progressBar;
-    @Bind(R.id.recycler_view) protected StarWarsRecyclerView recyclerView;
+    @Bind(R.id.recycler_view) protected RecyclerView recyclerView;
+    @Bind(R.id.container) protected FrameLayout container;
 
+    private NetworkErrorManager networkErrorManager;
     private LinearLayoutManager layoutManager;
     private PeopleListAdapter adapter;
     private ArrayList<People> peopleList;
     private int currentPage = 1;
+    private boolean isTwoPane = false;
 
-    public static PeopleListFragment newInstance() {
+    public static PeopleListFragment newInstance(boolean isTwoPane) {
         PeopleListFragment fragment = new PeopleListFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isTwoPane", isTwoPane);
+        fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isTwoPane = getArguments().getBoolean("isTwoPane", false);
     }
 
     @Nullable
@@ -83,15 +95,16 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
         View rootView = inflater.inflate(R.layout.fragment_people_list, container, false);
         ButterKnife.bind(this, rootView);
 
+        networkErrorManager = new NetworkErrorManager();
         initRecylerView();
 
         if (savedInstanceState != null && savedInstanceState.containsKey(PEOPLE_LIST)) {
             currentPage = savedInstanceState.getInt(CURRENT_PAGE, 0);
-            handleSuccess((ArrayList<People>) savedInstanceState.getSerializable(PEOPLE_LIST));
-            Log.e(TAG, "peoples from saved = " + peopleList.size());
+            populateList((ArrayList<People>) savedInstanceState.getSerializable(PEOPLE_LIST));
         } else {
-            getPeople(currentPage);
+            getPeopleList(currentPage);
         }
+
         return rootView;
     }
 
@@ -100,29 +113,25 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+        if (isTwoPane && savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // Activities containing this fragment must implement its callbacks.
-        if (!(activity instanceof Callbacks)) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (!(context instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        callbacks = (Callbacks) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
-        // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = itemSelectedCallbacks;
+        callbacks = itemSelectedCallbacks;
     }
 
     @Override
@@ -139,7 +148,7 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        outState.putInt(STATE_ACTIVATED_POSITION, activatedPosition);
         outState.putSerializable(PEOPLE_LIST, peopleList);
         outState.putInt(CURRENT_PAGE, currentPage);
         Log.e(TAG, "peoples out = " + peopleList.size());
@@ -160,30 +169,39 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
         recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager, currentPage) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                getPeople(page);
+                getPeopleList(page);
             }
         });
 
         recyclerView.addOnItemTouchListener(new ItemTouchListenerAdapter(recyclerView, this));
     }
 
-    private void getPeople(int page) {
-        Call<PeoplesResponse> articleCallback = new ApiManager().getSwapiService().getPeople(page);
+    private void getPeopleList(int page) {
+        if (peopleList.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        Call<PeopleListResponse> articleCallback = new ApiManager().getSwapiService().getPeople(page);
         articleCallback.enqueue(this);
     }
 
     @Override
-    public void onResponse(Response<PeoplesResponse> response, Retrofit retrofit) {
-        try {
-            handleSuccess(response.body().results);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void onResponse(Response<PeopleListResponse> response, Retrofit retrofit) {
+        populateList(response.body().results);
     }
 
-    private void handleSuccess(List<People> peopleList) {
-        boolean activateFirstItem = ((MainActivity) getActivity()).mTwoPane && this.peopleList.isEmpty();
+    @Override
+    public void onFailure(Throwable t) {
+        if (peopleList.isEmpty()) {
+            networkErrorManager.displayNetworkError(container, NetworkErrorManager.MODE_FULL, PeopleListFragment.this);
+        } else {
+            networkErrorManager.displayNetworkError(container, NetworkErrorManager.MODE_SNACK, PeopleListFragment.this);
+        }
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void populateList(List<People> peopleList) {
+        boolean activateFirstItem = isTwoPane && this.peopleList.isEmpty();
         for (int i = 0; i < peopleList.size(); ++i) {
             this.peopleList.add(peopleList.get(i));
         }
@@ -194,10 +212,10 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
     }
 
     @Override
-    public void onFailure(Throwable t) {
-        Log.e(TAG, "Error : " + t.getMessage());
+    public void onNetworkErrorClickListener() {
+        networkErrorManager.hideNetworkError(container);
+        getPeopleList(currentPage);
     }
-
 
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         selectionMode = activateOnItemClick ? CHOICE_MODE_SINGLE : CHOICE_MODE_NONE;
@@ -205,7 +223,7 @@ public class PeopleListFragment extends Fragment implements Callback<PeoplesResp
 
     private void setActivatedPosition(int position) {
         adapter.setSelected(position);
-        mActivatedPosition = position;
-        mCallbacks.onItemSelected(position, peopleList.get(position));
+        activatedPosition = position;
+        callbacks.onItemSelected(position, peopleList.get(position));
     }
 }

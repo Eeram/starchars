@@ -1,7 +1,9 @@
 package com.mathieu.starchars.ui.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -10,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Project :    Star Chars
@@ -33,6 +37,7 @@ import butterknife.ButterKnife;
 public class PeopleDetailFragment extends Fragment {
 
     public final static String TAG = "PeopleDetailFragment";
+    public final static String GOOGLE_BASE_URL = "http://www.google.com/";
 
     @Bind(R.id.detail_toolbar) protected Toolbar toolbar;
 
@@ -47,6 +52,7 @@ public class PeopleDetailFragment extends Fragment {
     @Bind(R.id.people_gender) protected TextView gender;
     @Bind(R.id.people_mass) protected TextView mass;
     @Bind(R.id.people_height) protected TextView height;
+    @Bind(R.id.button_more_on_google) protected Button buttonMoreGoogle;
 
     @Bind(R.id.people_episode_1) protected TextView episode1;
     @Bind(R.id.people_episode_2) protected TextView episode2;
@@ -57,7 +63,6 @@ public class PeopleDetailFragment extends Fragment {
     @Bind(R.id.people_episode_7) protected TextView episode7;
 
     private People people;
-
 
     public static PeopleDetailFragment newInstance(Bundle args) {
         PeopleDetailFragment fragment = new PeopleDetailFragment();
@@ -105,6 +110,7 @@ public class PeopleDetailFragment extends Fragment {
         gender.setText(people.getGender());
         mass.setText(people.getMass());
         height.setText(people.getHeight());
+        buttonMoreGoogle.setText("More info on " + people.name);
 
         episode1.setBackgroundResource(people.isInFilm(1) ? R.drawable.circle_red : R.drawable.circle_gray);
         episode2.setBackgroundResource(people.isInFilm(2) ? R.drawable.circle_red : R.drawable.circle_gray);
@@ -146,5 +152,13 @@ public class PeopleDetailFragment extends Fragment {
             }
         });
         pictureProvider.retrieveCharacterPicture(people.getSlug());
+    }
+
+    @OnClick(R.id.button_more_on_google)
+    public void onButtonMoreClick() {
+        Uri uri = Uri.parse(GOOGLE_BASE_URL + "search?q=" + "star+wars+" + people.name.replace(" ", "+"));
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        startActivity(intent);
     }
 }

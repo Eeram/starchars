@@ -1,61 +1,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".WelcomeActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:scrollbars="none"
         android:layout_centerInParent="true"
-        android:padding="32dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <com.mathieu.starchars.ui.views.FontTextView
-            style="@style/TextAppearance.AppCompat.Display3"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="48dp"
-            android:gravity="center"
-            android:lineSpacingExtra="-48dp"
-            android:text="@string/app_name_display"
-            android:textColor="@color/amber"
-            app:font="StarJhol.ttf" />
+            android:orientation="vertical"
+            android:padding="32dp">
 
-        <com.mathieu.starchars.ui.views.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:gravity="center"
-            app:font="Raleway-Bold.ttf"
-            android:text="Welcome young padawan!"/>
+            <com.mathieu.starchars.ui.views.FontTextView
+                style="@style/TextAppearance.AppCompat.Display3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="48dp"
+                android:gravity="center"
+                android:lineSpacingExtra="-48dp"
+                android:text="@string/app_name_display"
+                android:textColor="@color/amber"
+                app:font="StarJhol.ttf"/>
 
-        <com.mathieu.starchars.ui.views.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="64dp"
-            android:gravity="center"
-            android:textSize="16sp"
-            app:font="Raleway-Medium.ttf"
-            android:text="Information about all Star Wars characters here you'll find."/>
+            <com.mathieu.starchars.ui.views.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="@string/about_welcome"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:font="Raleway-Bold.ttf"/>
 
-        <Button
-            android:id="@+id/button_lets_go"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/YellowButton"
-            android:text="Ok, let's go!" />
-    </LinearLayout>
+            <com.mathieu.starchars.ui.views.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="64dp"
+                android:gravity="center"
+                android:text="@string/about_information"
+                android:textSize="16sp"
+                app:font="Raleway-Medium.ttf"/>
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+            <Button
+                android:id="@+id/button_lets_go"
+                style="@style/YellowButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:text="@string/about_go_button"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@android:color/transparent"

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,6 +25,8 @@ import butterknife.ButterKnife;
  */
 
 public class MainActivity extends BaseActivity implements PeopleListFragment.Callbacks {
+
+    private static final String TAG = "MainActivity";
 
     @Bind(R.id.main_toolbar) protected Toolbar toolbar;
 
@@ -88,6 +91,7 @@ public class MainActivity extends BaseActivity implements PeopleListFragment.Cal
 
     @Override
     public void onItemSelected(int position, People people) {
+        Log.e(TAG, "onItemSelected");
         if (mTwoPane) {
             setPeopleDetailFragment(people);
         } else {
@@ -100,7 +104,7 @@ public class MainActivity extends BaseActivity implements PeopleListFragment.Cal
         if (getFragmentManager().findFragmentByTag(PeopleListFragment.TAG) != null)
             fragment = (PeopleListFragment) getFragmentManager().findFragmentByTag(PeopleListFragment.TAG);
         else {
-            fragment = PeopleListFragment.newInstance();
+            fragment = PeopleListFragment.newInstance(mTwoPane);
         }
         fragment.setActivateOnItemClick(mTwoPane);
 

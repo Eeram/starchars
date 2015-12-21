@@ -23,9 +23,9 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray_darker_2"
+            android:background="@color/gray_darker"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorAccent"
+            app:contentScrim="@color/gray_dark"
             app:expandedTitleMarginEnd="72dp"
             app:expandedTitleMarginStart="@dimen/activity_horizontal_margin"
             app:layout_scrollFlags="scroll|snap">
@@ -43,7 +43,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|bottom"
                 android:background="@drawable/gradient_overlay" />
 
@@ -98,7 +98,8 @@
                 android:text="Full name"
                 app:font="Raleway-Medium.ttf" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
+                app:font="Raleway-Bold.ttf"
                 android:id="@+id/people_full_name"
                 style="@style/TextView.Value"
                 android:layout_width="wrap_content"
@@ -114,7 +115,8 @@
                 android:text="Quick description"
                 app:font="Raleway-Medium.ttf" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
+                app:font="Raleway-Bold.ttf"
                 android:id="@+id/people_description"
                 style="@style/TextView.Value"
                 android:layout_width="wrap_content"
@@ -142,7 +144,8 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_1"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -155,7 +158,8 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_2"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -167,7 +171,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_3"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -179,7 +184,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_4"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -191,7 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_5"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -203,7 +210,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_6"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -215,7 +223,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_episode_7"
                         style="@style/TextView.Value.Circle"
                         android:layout_centerInParent="true"
@@ -233,7 +242,8 @@
                 android:text="Birthday"
                 app:font="Raleway-Medium.ttf" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
+                app:font="Raleway-Bold.ttf"
                 android:id="@+id/people_birthday"
                 style="@style/TextView.Value"
                 android:layout_width="wrap_content"
@@ -249,7 +259,8 @@
                 android:text="Genre"
                 app:font="Raleway-Medium.ttf" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
+                app:font="Raleway-Bold.ttf"
                 android:id="@+id/people_gender"
                 style="@style/TextView.Value"
                 android:layout_width="wrap_content"
@@ -276,7 +287,8 @@
                         android:text="Height"
                         app:font="Raleway-Medium.ttf" />
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_height"
                         style="@style/TextView.Value"
                         android:layout_width="wrap_content"
@@ -297,7 +309,8 @@
                         android:text="Mass"
                         app:font="Raleway-Medium.ttf" />
 
-                    <TextView
+                    <com.mathieu.starchars.ui.views.FontTextView
+                        app:font="Raleway-Bold.ttf"
                         android:id="@+id/people_mass"
                         style="@style/TextView.Value"
                         android:layout_width="wrap_content"
@@ -316,7 +329,8 @@
                 android:text="Homeworld"
                 app:font="Raleway-Medium.ttf" />
 
-            <TextView
+            <com.mathieu.starchars.ui.views.FontTextView
+                app:font="Raleway-Bold.ttf"
                 android:id="@+id/people_homeworld"
                 style="@style/TextView.Value"
                 android:layout_width="wrap_content"
@@ -324,6 +338,15 @@
                 tools:text="Tatooine" />
 
             <include layout="@layout/view_horizontal_divider" />
+
+            <Button
+                android:id="@+id/button_more_on_google"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                style="@style/YellowButton"
+                android:layout_marginTop="16dp"
+                tools:text="More info on Darth Vader" />
 
         </LinearLayout>
     </ScrollView>
